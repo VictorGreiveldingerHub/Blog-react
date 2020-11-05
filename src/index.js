@@ -1,7 +1,6 @@
 // == Import : npm
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 // == Import : local
 // Composants
@@ -9,7 +8,7 @@ import Blog from 'src/components/Blog';
 
 // == Render
 // 1. Le composant racine (celui qui contient l'ensemble de l'app)
-const rootReactElement = <Router><Blog /></Router>;
+const rootReactElement = <Blog />;
 // cette instanciation du composant Blog pourrait s'écrire :
 // const rootComponent = React.createElement(Blog);
 
