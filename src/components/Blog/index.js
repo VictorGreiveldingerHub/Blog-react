@@ -1,6 +1,11 @@
 // == Import
 import React, {useState, useEffect, useReducer} from 'react';
 import axios from 'axios';
+import {
+  Route,
+  Link,
+  Switch
+} from 'react-router-dom';
 
 // Composants
 import Header from 'src/components/Header';
@@ -17,6 +22,8 @@ import './styles.scss';
 
 // == Composant
 const Blog = () => {
+
+console.log(categoriesData);
 
   // Mise en place de useReducer.
   const reducer = (state, action) => {
