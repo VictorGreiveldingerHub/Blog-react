@@ -1,5 +1,5 @@
 // == Import
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useReducer} from 'react';
 import axios from 'axios';
 
 // Composants
@@ -17,28 +17,36 @@ import './styles.scss';
 
 // == Composant
 const Blog = () => {
-  console.log('Etat initial');
-  const [posts, setPosts] = useState([]);
+
+  // Mise en place de useReducer.
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case 'FETCH_REPOS': {
+        return {...state, posts: action.payload}
+      }
+    }
+  };
+
+  const [state, dispatch] = useReducer((reducer), {
+    posts: [],
+  });
 
   useEffect (
     () => {
-      console.log('plop');
       axios.get('https://oclock-open-apis.now.sh/api/blog/posts')
         .then((response) => {
-          console.log(response);
-          setPosts(response.data);
+          dispatch({ type: 'FETCH_REPOS', payload: response.data});
         })
     },
     [],
   );
 
-  console.log('rendu');
   return (
     <div className="blog">
       <Header categories={categoriesData} />
         {categoriesData.map((category) => (
             <Posts
-              posts={getPostsByCategory(posts, category.label)}
+              posts={getPostsByCategory(state.posts, category.label)}
               category={category.label}
             />
           ))}
@@ -46,15 +54,6 @@ const Blog = () => {
     </div>
   );
 };
-
-
-/* TEST AXIOS
-
-*/
-
-// let promise = axios.get('https://oclock-open-apis.now.sh/api/blog/posts');
-// console.log(promise);
-// promise.then((response) => { console.log(promise);});
 
 // == Export
 export default Blog;
